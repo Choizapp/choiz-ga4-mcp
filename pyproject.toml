@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "choiz-ga4-mcp"
-version = "2.0.1-choiz1"
+version = "2.0.1.post1"
 description = "Choizapp fork of google-analytics-mcp: GA4 MCP server with security fixes and Windows setup. Based on surendranb/google-analytics-mcp."
 readme = "README.md"
 license = "Apache-2.0"
