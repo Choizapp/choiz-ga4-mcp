@@ -3,13 +3,14 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "google-analytics-mcp"
-version = "2.0.1"
-description = "Google Analytics 4 MCP server for AI agents and agentic workflows. Gives agents analysis-ready GA4 access with schema discovery, server-side aggregation, and smart defaults."
+name = "choiz-ga4-mcp"
+version = "2.0.1-choiz1"
+description = "Choizapp fork of google-analytics-mcp: GA4 MCP server with security fixes and Windows setup. Based on surendranb/google-analytics-mcp."
 readme = "README.md"
 license = "Apache-2.0"
 authors = [
-    {name = "Surendran B", email = "reachsuren@gmail.com"}
+    {name = "Surendran B", email = "reachsuren@gmail.com"},
+    {name = "Choizapp"}
 ]
 requires-python = ">=3.10"
 dependencies = [
@@ -29,9 +30,10 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/surendranb/google-analytics-mcp"
-Repository = "https://github.com/surendranb/google-analytics-mcp"
-Issues = "https://github.com/surendranb/google-analytics-mcp/issues"
+Homepage = "https://github.com/Choizapp/choiz-ga4-mcp"
+Repository = "https://github.com/Choizapp/choiz-ga4-mcp"
+Issues = "https://github.com/Choizapp/choiz-ga4-mcp/issues"
+Upstream = "https://github.com/surendranb/google-analytics-mcp"
 
 [project.scripts]
 ga4-mcp-server = "ga4_mcp.server:main"

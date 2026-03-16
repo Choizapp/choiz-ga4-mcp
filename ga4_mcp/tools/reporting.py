@@ -160,6 +160,7 @@ def get_ga4_data(
                 print(f"DEBUG: Row count estimation failed: {e}", file=sys.stderr)
 
         # --- Main GA4 API Call ---
+        use_aggregation = enable_aggregation and _should_aggregate(parsed_dimensions, parsed_metrics)
         request = RunReportRequest(
             property=f"properties/{property_id}",
             dimensions=dimension_objects,
@@ -168,7 +169,7 @@ def get_ga4_data(
             dimension_filter=filter_expression,
             limit=limit,
             order_bys=_get_smart_sorting(parsed_dimensions, parsed_metrics),
-            metric_aggregations=[MetricAggregation.TOTAL] if enable_aggregation and _should_aggregate(parsed_dimensions, parsed_metrics) else None
+            metric_aggregations=[MetricAggregation.TOTAL] if use_aggregation else [],
         )
         response = client.run_report(request=request)
 

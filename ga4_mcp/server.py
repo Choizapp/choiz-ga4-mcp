@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+import stat
 import sys
 from .coordinator import mcp
 from .tools import metadata, reporting
@@ -48,10 +49,24 @@ def main():
         print("Please set it to your GA4 property ID (e.g., '123456789').", file=sys.stderr)
         sys.exit(1)
 
+    if not credentials_path.endswith(".json"):
+        print(f"ERROR: GOOGLE_APPLICATION_CREDENTIALS must point to a .json file.", file=sys.stderr)
+        sys.exit(1)
+
     if not os.path.exists(credentials_path):
         print(f"ERROR: Credentials file not found at '{credentials_path}'.", file=sys.stderr)
         print("Please check the GOOGLE_APPLICATION_CREDENTIALS path.", file=sys.stderr)
         sys.exit(1)
+
+    # On Unix-like systems, warn if the credentials file has overly permissive permissions.
+    if hasattr(os, "stat") and os.name != "nt":
+        file_mode = os.stat(credentials_path).st_mode & 0o777
+        if file_mode & 0o077:
+            print(
+                f"WARNING: Credentials file '{credentials_path}' has permissions {oct(file_mode)}. "
+                "It should only be readable by the owner (chmod 600).",
+                file=sys.stderr,
+            )
 
     # 2. Fetch and cache the GA4 property schema
     print(f"Fetching schema for property '{property_id}'...", file=sys.stderr)

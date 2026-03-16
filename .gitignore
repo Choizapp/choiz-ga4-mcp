@@ -1,9 +1,15 @@
 # Python
 venv/
+.venv/
 *.pyc
 __pycache__/
 .env
 .DS_Store
+
+# Credentials — NEVER commit service account keys
+*service-account*.json
+*service_account*.json
+*credentials*.json
 
 # Build artifacts
 dist/

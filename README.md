@@ -1,26 +1,16 @@
-<p align="center">
-  <img src="logo.png" alt="Google Analytics MCP Logo" width="120" />
+# choiz-ga4-mcp
 
-
-# Google Analytics MCP Server
-
-mcp-name: io.github.surendranb/google-analytics-mcp
-
-[![PyPI version](https://badge.fury.io/py/google-analytics-mcp.svg)](https://badge.fury.io/py/google-analytics-mcp)
-[![PyPI Downloads](https://static.pepy.tech/badge/google-analytics-mcp)](https://pepy.tech/projects/google-analytics-mcp)
-[![GitHub stars](https://img.shields.io/github/stars/surendranb/google-analytics-mcp?style=social)](https://github.com/surendranb/google-analytics-mcp/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/surendranb/google-analytics-mcp?style=social)](https://github.com/surendranb/google-analytics-mcp/network/members)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Made with Love](https://img.shields.io/badge/Made%20with-❤️-red.svg)](https://github.com/surendranb/google-analytics-mcp)
+[![Based on](https://img.shields.io/badge/based%20on-surendranb%2Fgoogle--analytics--mcp-lightgrey)](https://github.com/surendranb/google-analytics-mcp)
 
-Connect Google Analytics 4 data to AI agents, agentic workflows, and MCP clients. Give agents analysis-ready access to website traffic, user behavior, and performance data with schema discovery, server-side aggregation, and safe defaults that reduce data wrangling.
+Choizapp's fork of [surendranb/google-analytics-mcp](https://github.com/surendranb/google-analytics-mcp). Connects Google Analytics 4 data to Claude via MCP, with security fixes, bug fixes, and Windows-friendly setup scripts.
 
-**Built for:** AI agents, analyst copilots, and MCP runtimes across Claude, ChatGPT, Cursor, Windsurf, and custom hosts.
-
-I also built a [Google Search Console MCP](https://github.com/surendranb/google-search-console-mcp) that enables you to mix & match the data from both the sources
-
-</p>
+**Changes vs upstream:**
+- Security: validates `.json` extension and file permissions on credentials file
+- Bug fix: `metric_aggregations=None` → `[]` to prevent TypeError in protobuf
+- Added `.env.example`, `setup.sh`, `setup.bat`, `SECURITY.md`
+- Updated Claude Desktop config template for Windows paths
 ---
 
 ## Why Agents Use This Server
@@ -208,28 +198,48 @@ If `python --version` worked:
 }
 ```
 
-### Method B: Install from a local clone
+### Method B: Install from this fork (Choizapp)
 
 ```bash
-git clone https://github.com/surendranb/google-analytics-mcp.git
-cd google-analytics-mcp
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install .
+git clone https://github.com/Choizapp/choiz-ga4-mcp.git
+cd choiz-ga4-mcp
+
+# Mac/Linux
+bash setup.sh
+
+# Windows
+setup.bat
 ```
 
 If you plan to modify the package locally, use `python -m pip install -e .` instead.
 
-**MCP Configuration:**
+**MCP Configuration (Mac/Linux):**
 
 ```json
 {
   "mcpServers": {
     "ga4-analytics": {
-      "command": "/full/path/to/google-analytics-mcp/.venv/bin/python",
+      "command": "/full/path/to/choiz-ga4-mcp/.venv/bin/python",
       "args": ["-m", "ga4_mcp"],
       "env": {
         "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/your/service-account-key.json",
+        "GA4_PROPERTY_ID": "123456789"
+      }
+    }
+  }
+}
+```
+
+**MCP Configuration (Windows):**
+
+```json
+{
+  "mcpServers": {
+    "ga4-analytics": {
+      "command": "C:/Users/YourUser/Documents/choiz-ga4-mcp/.venv/Scripts/python.exe",
+      "args": ["-m", "ga4_mcp"],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "C:/Users/YourUser/Documents/choiz-ga4-mcp/service-account-key.json",
         "GA4_PROPERTY_ID": "123456789"
       }
     }
@@ -440,15 +450,19 @@ python -m pip install --user google-analytics-mcp
 ## Project Structure
 
 ```
-google-analytics-mcp/
+choiz-ga4-mcp/
 ├── ga4_mcp/                # Main package directory
-│   ├── server.py           # Core server logic
+│   ├── server.py           # Core server logic (+ Choiz security fixes)
 │   ├── coordinator.py      # MCP instance
 │   └── tools/              # Tool definitions (reporting, metadata)
-├── pyproject.toml          # Package configuration for PyPI
+├── .env.example            # Environment variable template
+├── setup.sh                # Mac/Linux setup script
+├── setup.bat               # Windows setup script
+├── claude-config-template.json  # Claude Desktop config template
+├── SECURITY.md             # Security policy
+├── pyproject.toml          # Package configuration
 ├── requirements.txt        # Dependencies for local dev
-├── README.md               # This file
-└── ...
+└── README.md               # This file
 ```
 
 ---

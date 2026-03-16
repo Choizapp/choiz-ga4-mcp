@@ -1,11 +1,11 @@
 {
   "mcpServers": {
     "ga4-analytics": {
-      "command": "/path/to/your/google-analytics-mcp/.venv/bin/python",
+      "command": "REPLACE_WITH_PYTHON_PATH",
       "args": ["-m", "ga4_mcp"],
       "env": {
-        "GOOGLE_APPLICATION_CREDENTIALS": "/path/to/your/service-account-key.json",
-        "GA4_PROPERTY_ID": "your-property-id-here"
+        "GOOGLE_APPLICATION_CREDENTIALS": "REPLACE_WITH_ABSOLUTE_PATH_TO_SERVICE_ACCOUNT_KEY.json",
+        "GA4_PROPERTY_ID": "REPLACE_WITH_NUMERIC_PROPERTY_ID"
       }
     }
   }
